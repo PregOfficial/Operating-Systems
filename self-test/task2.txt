@@ -1,0 +1,50 @@
+When would you use a sorted binary tree over a linked list?
+If it's more important to search values in a tree, than insert and remove elements from it.
+A linked list is faster in inserting and removing. In a binary tree every element can just exist once.
+
+What would you change if the tree had to support not just integers, but any type of data?
+You would need to create a function, which compares the elements, if its bigger or smaller.
+
+Why do we use modules instead of putting everything a single file?
+The code is more abstract and you could implement different ways of a binary tree search.
+
+Is the development cycle (i.e. changing a source file, recompiling and running tests) faster when using modules? Explain your answer.
+Changing the source file takes longer, because you have to edit the header file and every file which includes the header file.
+Recompiling and testing is faster, because the compiler doesn't need to compile everything, it just compiles and tests changed code.
+
+What is a header guard and why is it needed?
+This checks if a header file is more than once included and just implement methods when they aren't already.
+
+Why is bstree not defined in the header file? What are the implications?
+The header file is just a abstract file, so the logic can implemented in a other way every time.
+
+Explain the const in the parameter list of bstree_print, is it required?
+We don't want that the print function modifies the given values.
+
+Explain memory leaks. Why are memory leaks bad? You should know how to use valgrind to check your program for memory leaks.
+Memory leaks exist when memory is allocated in a program but not freed.
+valgrind --leak-check=full <file>
+
+What is the reason behind writing everything in English?
+Because the pre defined methods are written in english and english is the main language of IT.
+
+Why should you use static for non-exported functions?
+The reason for this is, that other files can't access these methods.
+
+Why should we comment our source code? Is it always needed? What should the comment state? What is self-documenting code?
+That other developers and you understand what you did in your code.
+Self-documenting is when your code is understandable because of variable names and methodnames.
+
+Why should the module not output debug messages?
+A binary search tree could be used for a lot programs, so you don't want debug messages in other programs.
+
+Why and when should you use assert?
+With assert you can test your code. So you should check your methods with a lot different arguments
+to check that it works.
+
+What are the benefits of using make over calling the compiler by hand?
+You can compile your header file with your c file together, you also can compile multiple c files.
+You are way faster with a make file than doing this by hand.
+
+Imagine it was your job to design the interface for the bstree module (writing bstree.h). What would you have done differently, and why?
+I don't think that there is a need for more functions or a other structure.
