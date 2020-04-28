@@ -43,3 +43,9 @@ int main(int arc, char* argv[]) {
 
 	return EXIT_SUCCESS;
 }
+
+/*
+N = 1000
+/usr/bin/time -p ./task2_b
+result: 0.0
+*/

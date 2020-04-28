@@ -1,0 +1,22 @@
+What is a race condition?
+A race condition is when 2 or more processes try to access the same data and at least one
+modifies it. So the result can be wrong.
+
+Why do race conditions occur?
+If there is not synchronization between the processes, it's not predictable wich process 
+accesses the data first.
+
+Is the output of a program with a race condition always incorrect?
+No, if the right process accesses the data before the other, then it could be right.
+
+If you run your program 100 times and always get the correct result, does that mean that there is no race condition?
+No, because this could be just a coincidence.
+
+What is synchronization?
+When one process can finish it's work before a other process tries to consume the data.
+
+Why are semaphores well suited for synchronizing producer-consumer patterns?
+Because it's just a very simple implementation and it fits our needs.
+
+Could Task 2 also be implemented using a single semaphore?
+Yes but then you need to implement, that the Producer accesses the data before the consumer.

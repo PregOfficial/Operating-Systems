@@ -12,12 +12,12 @@
 #include <unistd.h>
 
 typedef struct {
-	int n;
+	uint64_t n;
 	uint64_t ringBuffer[10];
 	uint64_t result;
 } sharedstr_t;
 
-const char* fifoPath = "task1_fifo";
-const char* shmName = "task1_shm";
+const char* fifoPath = "task_fifo";
+const char* shmName = "task_shm";
 
 #endif
