@@ -59,7 +59,7 @@ void* createFileThread(void* input) {
 	};
 	pthread_cleanup_pop(0);
 
-	return NULL;
+	pthread_exit(NULL);
 }
 
 void cleanUp(void* input) {

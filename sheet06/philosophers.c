@@ -49,3 +49,20 @@ int main() {
 
 	return EXIT_SUCCESS;
 }
+
+/*
+Explain the program:
+there are the same amount of forks as philosophers and every philosopher
+needs 2 forks to eat. So not all philosophers are able to eat at the same time,
+in this program it's realised with mutexs
+
+How can a deadlock occur? Does it always happen?
+A deadlock occurs when a philosopher can pick up his right fork, but not
+his left one. In this example nearly everytime it happens, because it's
+very unlikely that the threads pick up the forks in the right order.
+
+Change the program to prevent any potential deadlocks from occurring. Explain how your changes
+prevent deadlocks.
+I added in the thread a mutex trylock on the left fork, so when it's not possible
+to lock the mutex then the right one unlocks.
+*/
