@@ -7,21 +7,19 @@
 
 void* threadCode(void* input);
 
-pthread_mutex_t mutex;
+pthread_spinlock_t spinlock;
+myqueue queue;
 
 typedef struct thread_data {
-	myqueue* queue;
 	int sum;
 	int i;
 } thread_data_t;
 
 int main(void) {
-
-	myqueue queue;
 	pthread_t threads[THREADS];
 	thread_data_t threadsData[THREADS];
 
-	if(pthread_mutex_init(&mutex, NULL) != 0) {
+	if(pthread_spin_init(&spinlock, 0) != 0) {
 		perror("Error creating mutex!");
 		return EXIT_FAILURE;
 	}
@@ -29,7 +27,6 @@ int main(void) {
 	myqueue_init(&queue);
 
 	for(int i = 0; i < THREADS; i++) {
-		threadsData[i].queue = &queue;
 		threadsData[i].sum = 0;
 		threadsData[i].i = i;
 
@@ -37,15 +34,15 @@ int main(void) {
 	}
 
 	for(int i = 0; i < 10000; i++) {
-		pthread_mutex_lock(&mutex);
+		pthread_spin_lock(&spinlock);
 		myqueue_push(&queue, 1);
-		pthread_mutex_unlock(&mutex);
+		pthread_spin_unlock(&spinlock);
 	}
 
 	for(int i = 0; i < THREADS; i++) {
-		pthread_mutex_lock(&mutex);
+		pthread_spin_lock(&spinlock);
 		myqueue_push(&queue, 0);
-		pthread_mutex_unlock(&mutex);
+		pthread_spin_unlock(&spinlock);
 	}
 
 	int sum = 0;
@@ -57,7 +54,7 @@ int main(void) {
 
 	printf("complete sum = %d\n", sum);
 
-	pthread_mutex_destroy(&mutex);
+	pthread_spin_destroy(&spinlock);
 
 	return EXIT_SUCCESS;
 }
@@ -69,18 +66,28 @@ void* threadCode(void* input) {
 	int sum = 0;
 
 	while(running) {
-		pthread_mutex_lock(&mutex);
-		if(!myqueue_is_empty(data->queue)) {
-			int value = myqueue_pop(data->queue);
+		pthread_spin_lock(&spinlock);
+		if(!myqueue_is_empty(&queue)) {
+			int value = myqueue_pop(&queue);
 			if(value == 0) {
 				running = false;
 			}
 			sum += value;
 		}
-		pthread_mutex_unlock(&mutex);
+		pthread_spin_unlock(&spinlock);
 	}
 	data->sum = sum;
 	printf("sum of Thread %d = %d\n", data->i, data->sum);
 
 	pthread_exit(NULL);
 }
+
+/*
+Time for Exercise2 Sheet06
+User time (seconds): 0.58
+System time (seconds): 0.20
+
+Time for this Excercise
+User time (seconds): 0.58
+System time (seconds): 0.20
+*/
