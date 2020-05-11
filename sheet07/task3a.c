@@ -44,7 +44,7 @@ void* threadCode(void* input) {
 }
 
 /*
-/usr/bin/time -v ./task3b
+/usr/bin/time -v ./task3a
 
 User time (seconds): 0.58
 System time (seconds): 0.20
