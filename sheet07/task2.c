@@ -91,3 +91,8 @@ void* threadCode(void* input) {
 
 	pthread_exit(NULL);
 }
+
+/*
+User time (seconds): 0.00
+System time (seconds): 0.00
+*/
