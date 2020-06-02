@@ -47,16 +47,6 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	void* nAllocations[iterations];
-	void* n2Allocations[iterations / 2];
-	randomAllocate(nAllocations, iterations);
-
-	freeRandom(nAllocations, iterations);
-
-	randomAllocate(n2Allocations, iterations / 2);
-	freeAll(nAllocations, iterations);
-	freeAll(n2Allocations, iterations / 2);
-
 	pthread_t threads[num_threads];
 
 	for(int i = 0; i < num_threads; i++) {
@@ -70,6 +60,20 @@ int main(int argc, char* argv[]) {
 	dlclose(lib);
 
 	return EXIT_SUCCESS;
+}
+
+void* threadCode() {
+	void* nAllocations[iterations];
+	void* n2Allocations[iterations / 2];
+	randomAllocate(nAllocations, iterations);
+
+	freeRandom(nAllocations, iterations);
+
+	randomAllocate(n2Allocations, iterations / 2);
+	freeAll(nAllocations, iterations);
+	freeAll(n2Allocations, iterations / 2);
+
+	pthread_exit(NULL);
 }
 
 void randomAllocate(void* allocations[], int allocationCounter) {
@@ -96,13 +100,4 @@ void freeAll(void* allocations[], int size) {
 			custom_free(allocations[i]);
 		}
 	}
-}
-
-void* threadCode() {
-	for(int i = 0; i < iterations; i++) {
-		void* ptr = custom_malloc(size);
-		custom_free(ptr);
-	}
-
-	pthread_exit(NULL);
 }

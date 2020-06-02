@@ -1,0 +1,9 @@
+*
+!/**/
+!*.*
+!Makefile
+*.zip
+.vscode
+/sheet06/Thread*.txt
+/ps_os_2020
+*.so
