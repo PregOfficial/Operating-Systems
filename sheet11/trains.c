@@ -8,6 +8,8 @@ time_t startTime;
 pthread_mutex_t mutex;
 pthread_t threads[TRAINS];
 
+bool quit = false;
+
 int main(void) {
 
 	for(int i = 0; i < STATIONS; i++) {
@@ -43,6 +45,14 @@ int main(void) {
 	if(pthread_mutex_destroy(&mutex) != 0) {
 		perror("error destroy mutex");
 		exit(1);
+	}
+
+	if(quit) {
+		printf("\n");
+		for(int i = 0; i < STATIONS; i++) {
+			if(stations[i].train != NULL)
+				printf("Platform %d: Train %d\n", stations[i].number, stations[i].train->number);
+		}
 	}
 
 	return EXIT_SUCCESS;
@@ -89,9 +99,5 @@ static void sigint_handler() {
 	for(int i = 0; i < TRAINS; i++) {
 		pthread_cancel(threads[i]);
 	}
-
-	for(int i = 0; i < STATIONS; i++) {
-		printf("Platform %d: Train %d\n", stations[i].number, stations[i].train->number);
-	}
-	exit(1);
+	quit = true;
 }
